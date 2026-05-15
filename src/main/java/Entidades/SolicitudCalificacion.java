@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package entidades;
+package Entidades;
 
 /**
  * se usa como tipo generico en la cola de solicitudes el FIFO del urbina
