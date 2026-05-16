@@ -10,6 +10,7 @@ import Entidades.Estudiante;
 import Entidades.Inscripciones;
 import Entidades.SolicitudCalificacion;
 import Estructuras.ListaEnlazada;
+import excepciones.PersistenciaException;
 
 /**
  *
@@ -17,27 +18,28 @@ import Estructuras.ListaEnlazada;
  */
 public interface IPersistenciaFachada {
     // estudiantes
-    void registrarEstudiante(Estudiante estudiante) throws Exception;
-    Estudiante buscarEstudiante(String matricula) throws Exception;
-    void eliminarEstudiante(String matricula) throws Exception;
+    void registrarEstudiante(Estudiante estudiante) throws PersistenciaException;
+    Estudiante buscarEstudiante(String matricula) throws PersistenciaException;
+    void eliminarEstudiante(String matricula) throws PersistenciaException;
     ListaEnlazada<Estudiante> obtenerTodosLosEstudiantes();
+    ListaEnlazada<Estudiante> listarEstudiantesOrdenadosPorPromedio() throws PersistenciaException;
 
     // cursos
-    void registrarCurso(Curso curso) throws Exception;
-    Curso buscarCurso(String clave) throws Exception;
-    void eliminarCurso(String clave) throws Exception;
+    void registrarCurso(Curso curso) throws PersistenciaException;
+    Curso buscarCurso(String clave) throws PersistenciaException;
+    void eliminarCurso(String clave) throws PersistenciaException;
     ListaEnlazada<Curso> obtenerTodosLosCursos();
 
     // inscripciones
-    void inscribirEstudiante(String claveCurso, String matricula) throws Exception;
-    void darBajaEstudiante(String claveCurso, String matricula) throws Exception;
+    void inscribirEstudiante(String claveCurso, String matricula) throws PersistenciaException;
+    void darBajaEstudiante(String claveCurso, String matricula) throws PersistenciaException;
     ListaEnlazada<Inscripciones> obtenerInscripciones();
 
     // solicitudes
     void agregarSolicitudCalificacion(SolicitudCalificacion solicitud);
-    SolicitudCalificacion procesarSolicitud();
+    SolicitudCalificacion procesarSolicitud() throws PersistenciaException;
 
     // acciones
     void registrarAccion(Accion accion);
-    Accion deshacerAccion();
+    Accion deshacerAccion() throws PersistenciaException;
 }
