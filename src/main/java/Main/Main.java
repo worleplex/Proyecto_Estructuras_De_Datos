@@ -3,7 +3,7 @@
  */
 package Main;
 
-import UI.Menu.UIMenuInicio;
+import Frames.FrmMenuPrincipal;
 import persistencia.PersistenciaFachada;
 
 /**
@@ -14,10 +14,6 @@ public class Main {
 
     public static void main(String[] args) {
 
-        PersistenciaFachada persistencia = new PersistenciaFachada();
-
-        UIMenuInicio menu = new UIMenu(persistencia);
-
-        menu.mostrarMenu();
+        new FrmMenuPrincipal(new PersistenciaFachada());
     }
 }

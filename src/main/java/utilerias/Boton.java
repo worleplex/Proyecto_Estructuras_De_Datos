@@ -21,6 +21,7 @@ public class Boton extends JButton {
         setFont(Fuentes.BOTON);
         setBackground(Colores.AZUL_MEDIO);
         setForeground(Colores.BLANCO);
+        setPreferredSize(new Dimension(150, 45));
 
         setFocusPainted(false);
         setCursor(new Cursor(Cursor.HAND_CURSOR));
