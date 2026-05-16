@@ -15,7 +15,6 @@ import javax.swing.JTextField;
 public class CampoTexto extends JTextField {
 
     public CampoTexto() {
-        setFont(new Font("Segoe UI", Font.PLAIN, 16));
-        setBorder(BorderFactory.createEmptyBorder(8, 10, 8, 10));
+        setFont(Fuentes.TEXTO);
     }
 }

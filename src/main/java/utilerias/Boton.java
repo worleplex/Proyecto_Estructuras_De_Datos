@@ -4,6 +4,7 @@
  */
 package utilerias;
 
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import javax.swing.JButton;
@@ -16,10 +17,12 @@ public class Boton extends JButton {
 
     public Boton(String texto) {
         super(texto);
-        setFont(new Font("Segoe UI", Font.BOLD, 15));
-        setFocusPainted(false);
+
+        setFont(Fuentes.BOTON);
         setBackground(Colores.AZUL_MEDIO);
         setForeground(Colores.BLANCO);
-        setPreferredSize(new Dimension(150, 45));
+
+        setFocusPainted(false);
+        setCursor(new Cursor(Cursor.HAND_CURSOR));
     }
 }

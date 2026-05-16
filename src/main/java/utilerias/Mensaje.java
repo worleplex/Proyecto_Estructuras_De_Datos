@@ -13,24 +13,15 @@ import javax.swing.JOptionPane;
  */
 public class Mensaje {
 
-    public static void exito(Component c, String msg) {
-        JOptionPane.showMessageDialog(
-                c, msg, "Éxito",
-                JOptionPane.INFORMATION_MESSAGE
-        );
+    public static void info(Component c, String msg) {
+        JOptionPane.showMessageDialog(c, msg, "Información", JOptionPane.INFORMATION_MESSAGE);
     }
 
     public static void error(Component c, String msg) {
-        JOptionPane.showMessageDialog(
-                c, msg, "Error",
-                JOptionPane.ERROR_MESSAGE
-        );
+        JOptionPane.showMessageDialog(c, msg, "Error", JOptionPane.ERROR_MESSAGE);
     }
 
-    public static void advertencia(Component c, String msg) {
-        JOptionPane.showMessageDialog(
-                c, msg, "Advertencia",
-                JOptionPane.WARNING_MESSAGE
-        );
+    public static void exito(Component c, String msg) {
+        JOptionPane.showMessageDialog(c, msg, "Éxito", JOptionPane.PLAIN_MESSAGE);
     }
 }

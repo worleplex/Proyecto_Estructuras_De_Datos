@@ -6,6 +6,7 @@ package utilerias;
 
 import java.awt.Font;
 import javax.swing.JTable;
+import javax.swing.table.JTableHeader;
 
 /**
  *
@@ -14,11 +15,11 @@ import javax.swing.JTable;
 public class Tabla extends JTable {
 
     public Tabla() {
-        setRowHeight(30);
-        setFont(new Font("Segoe UI", Font.PLAIN, 14));
 
-        getTableHeader().setFont(
-                new Font("Segoe UI", Font.BOLD, 15)
-        );
+        setFont(Fuentes.TEXTO);
+        setRowHeight(28);
+
+        JTableHeader header = getTableHeader();
+        header.setFont(Fuentes.SUBTITULO);
     }
 }

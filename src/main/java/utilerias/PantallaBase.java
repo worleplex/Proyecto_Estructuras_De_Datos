@@ -5,7 +5,6 @@
 package utilerias;
 
 import java.awt.BorderLayout;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
@@ -14,48 +13,28 @@ import javax.swing.SwingConstants;
  *
  * @author Noelia E.N
  */
-public class PantallaBase extends JFrame {
+public abstract class PantallaBase extends JPanel {
 
-    protected JPanel panelCentro;
+    protected JPanel contenido;
 
-    public PantallaBase(String titulo) {
+    public PantallaBase() {
 
-        setTitle(titulo);
-        setSize(1100, 700);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
         setLayout(new BorderLayout());
+        setBackground(Colores.AZUL_CLARO);
 
-        panelCentro = new JPanel(new BorderLayout());
-        panelCentro.setBackground(Colores.AZUL_CLARO);
+        contenido = new PanelFormulario();
 
-        JLabel bienvenida = new JLabel(
-                titulo,
-                SwingConstants.CENTER
-        );
-
-        bienvenida.setFont(
-                new java.awt.Font(
-                        "Segoe UI",
-                        java.awt.Font.BOLD,
-                        28
-                )
-        );
-
-        bienvenida.setForeground(Colores.AZUL_OSCURO);
-
-        panelCentro.add(bienvenida, BorderLayout.CENTER);
-
-        add(panelCentro);
+        add(contenido, BorderLayout.CENTER);
     }
 
-    public JPanel getPanelCentro() {
-        return panelCentro;
+    public JLabel titulo(String texto){
+
+        JLabel lbl = new JLabel(texto, SwingConstants.CENTER);
+        lbl.setFont(Fuentes.TITULO);
+        lbl.setForeground(Colores.AZUL_OSCURO);
+
+        return lbl;
     }
 
-    public void limpiar() {
-        panelCentro.removeAll();
-        panelCentro.revalidate();
-        panelCentro.repaint();
-    }
+    public abstract void construir();
 }
