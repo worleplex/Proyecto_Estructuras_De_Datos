@@ -24,14 +24,47 @@ public class ArbolAVL<T extends Comparable<T>> {
     public void insertar(T dato) {
         raiz = insertarRec(raiz, dato);
     }
-
-    /**
-     * Vacia el arbol
-     */
-    public void clear() {
-        raiz = null;
-    }
     
+    /**
+     * Metodo recursivo para insertar un nodo
+     * @param nodo nodo raiz del arbol
+     * @param dato dato del nodo a insertar
+     * @return nodo raiz del arbol
+     */
+    private NodoArbolAVL<T> insertarRec(NodoArbolAVL<T> nodo, T dato) {
+        //Cuando encuentra un null, regresa el nuevo nodo
+        if (nodo == null) {
+            return new NodoArbolAVL(dato);
+        }
+
+        //Insercion a la izquierda
+        if (dato.compareTo(nodo.getDato()) < 0) {
+            nodo.setIzquierdo(insertarRec(nodo.getIzquierdo(), dato));
+        } else if (dato.compareTo(nodo.getDato()) > 0) {
+            nodo.setDerecho(insertarRec(nodo.getDerecho(), dato));
+        } else {
+            //no permiten valores duplicados, asi que no se inserta
+            return nodo;
+        }
+
+        //Se actualiza la altura del nodo
+        actualizarAltura(nodo);
+
+        //Se obtiene su balance y se aplica rotacion si es necesario
+        int balance = calcularBalance(nodo);
+
+        if (balance > 1 && dato.compareTo(nodo.getIzquierdo().getDato()) < 0) {
+            return rotacionDerecha(nodo);
+        } else if (balance < -1 && dato.compareTo(nodo.getDerecho().getDato()) > 0) {
+            return rotacionIzquierda(nodo);
+        } else if (balance > 1 && dato.compareTo(nodo.getIzquierdo().getDato()) > 0) {
+            return rotacionIzquierdaDerecha(nodo);
+        } else if (balance < -1 && dato.compareTo(nodo.getDerecho().getDato()) < 0) {
+            return rotacionDerechaIzquierda(nodo);
+        }
+        return nodo;
+    }
+
     /**
      * muestra los nodos del arbol inOrden
      */
@@ -60,8 +93,6 @@ public class ArbolAVL<T extends Comparable<T>> {
     private int altura(NodoArbolAVL<T> nodo) {
         return (nodo == null) ? 0 : nodo.getAltura();
     }
-
-    
 
     /**
      * actualiza la altura de un nodo
@@ -159,43 +190,9 @@ public class ArbolAVL<T extends Comparable<T>> {
     }
 
     /**
-     * Metodo recursivo para insertar un nodo
-     * @param nodo nodo raiz del arbol
-     * @param dato dato del nodo a insertar
-     * @return nodo raiz del arbol
+     * Vacia el arbol
      */
-    private NodoArbolAVL<T> insertarRec(NodoArbolAVL<T> nodo, T dato) {
-        //Cuando encuentra un null, regresa el nuevo nodo
-        if (nodo == null) {
-            return new NodoArbolAVL(dato);
-        }
-
-        //Insercion a la izquierda
-        if (dato.compareTo(nodo.getDato()) < 0) {
-            nodo.setIzquierdo(insertarRec(nodo.getIzquierdo(), dato));
-        } else if (dato.compareTo(nodo.getDato()) > 0) {
-            nodo.setDerecho(insertarRec(nodo.getDerecho(), dato));
-        } else {
-            //no permiten valores duplicados, asi que no se inserta
-            return nodo;
-        }
-
-        //Se actualiza la altura del nodo
-        actualizarAltura(nodo);
-
-        //Se obtiene su balance y se aplica rotacion si es necesario
-        int balance = calcularBalance(nodo);
-
-        if (balance > 1 && dato.compareTo(nodo.getIzquierdo().getDato()) < 0) {
-            return rotacionDerecha(nodo);
-        } else if (balance < -1 && dato.compareTo(nodo.getDerecho().getDato()) > 0) {
-            return rotacionIzquierda(nodo);
-        } else if (balance > 1 && dato.compareTo(nodo.getIzquierdo().getDato()) > 0) {
-            return rotacionIzquierdaDerecha(nodo);
-        } else if (balance < -1 && dato.compareTo(nodo.getDerecho().getDato()) < 0) {
-            return rotacionDerechaIzquierda(nodo);
-        }
-        return nodo;
+    public void clear() {
+        raiz = null;
     }
-
 }
