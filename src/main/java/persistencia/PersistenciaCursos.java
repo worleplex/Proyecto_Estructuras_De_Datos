@@ -54,10 +54,13 @@ public class PersistenciaCursos {
      * @throws PersistenciaException si el curso no existe
      */
     public Curso buscarCurso(String clave) throws PersistenciaException {
+        if (clave == null || clave.trim().isEmpty()) {
+            throw new PersistenciaException("La clave no puede estar vacía");
+        }
         try {
-            return cursos.get(clave);
+            return cursos.get(clave.trim());
         } catch (Exception e) {
-            throw new PersistenciaException("Curso no encontrado");
+            throw new PersistenciaException("Curso no encontrado con clave: " + clave);
         }
     }
 
@@ -68,13 +71,16 @@ public class PersistenciaCursos {
      * @throws PersistenciaException si el curso no existe
      */
     public void eliminarCurso(String clave) throws PersistenciaException {
+        if (!cursos.contains(clave)) {
+            throw new PersistenciaException("No existe ningún curso con clave: " + clave);
+        }
         try {
             cursos.remove(clave);
         } catch (Exception e) {
-            throw new PersistenciaException("No se pudo eliminar el curso");
+            throw new PersistenciaException("No se pudo eliminar el curso: " + e.getMessage());
         }
     }
-
+    
     /**
      * obtiene todos los cursos
      *
