@@ -10,6 +10,7 @@ import Entidades.Estudiante;
 import Entidades.Inscripciones;
 import Entidades.SolicitudCalificacion;
 import Estructuras.ListaEnlazada;
+import ListasEnlazadas.ListaDoblementeEnlazadaCircular;
 import excepciones.PersistenciaException;
 
 /**
@@ -34,7 +35,11 @@ public interface IPersistenciaFachada {
     void inscribirEstudiante(String claveCurso, String matricula) throws PersistenciaException;
     void darBajaEstudiante(String claveCurso, String matricula) throws PersistenciaException;
     ListaEnlazada<Inscripciones> obtenerInscripciones();
-
+    // fitch te añadi esto nuevo y solo esos 3
+    ListaEnlazada<Estudiante> obtenerInscritosDeCurso(String claveCurso) throws PersistenciaException;
+    ListaDoblementeEnlazadaCircular<Estudiante> obtenerListaEsperaDeCurso(String claveCurso) throws PersistenciaException;
+    Estudiante rotarRolCurso(String claveCurso) throws PersistenciaException;
+    
     // solicitudes
     void agregarSolicitudCalificacion(SolicitudCalificacion solicitud);
     SolicitudCalificacion procesarSolicitud() throws PersistenciaException;
@@ -42,4 +47,5 @@ public interface IPersistenciaFachada {
     // acciones
     void registrarAccion(Accion accion);
     Accion deshacerAccion() throws PersistenciaException;
+    
 }

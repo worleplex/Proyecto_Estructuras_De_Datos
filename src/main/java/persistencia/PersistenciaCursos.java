@@ -6,7 +6,9 @@ package persistencia;
 
 import Abstractas.DiccionarioTablaHash;
 import Entidades.Curso;
+import Entidades.Estudiante;
 import Estructuras.ListaEnlazada;
+import ListasEnlazadas.ListaDoblementeEnlazadaCircular;
 import excepciones.PersistenciaException;
 
 /**
@@ -80,5 +82,83 @@ public class PersistenciaCursos {
      */
     public ListaEnlazada<Curso> obtenerTodos() {
         return cursos.obtenerTodosLosValores();
+    }
+    
+    // niño jorge te añadi esto porque ya tenemos el curso completo
+    
+    /**
+     * Inscribe un estudiante en un curso.
+     * Si hay cupo lo inscribe; si no, lo manda a lista de espera.
+     *
+     * @param claveCurso  clave del curso
+     * @param estudiante  estudiante a inscribir
+     * @throws PersistenciaException si el curso no existe
+     */
+    public void inscribirEstudiante(String claveCurso, Estudiante estudiante)
+            throws PersistenciaException {
+        Curso curso = buscarCurso(claveCurso);
+        curso.inscribir(estudiante);
+    }
+
+    /**
+     * Da de baja a un estudiante de un curso.
+     * Si hay alguien en espera, pasa al cupo liberado automáticamente.
+     *
+     * @param claveCurso clave del curso
+     * @param estudiante estudiante a dar de baja
+     * @throws PersistenciaException si el curso no existe o el estudiante no estaba inscrito
+     */
+    public void darBajaEstudiante(String claveCurso, Estudiante estudiante)
+            throws PersistenciaException {
+        Curso curso = buscarCurso(claveCurso);
+        boolean eliminado = curso.darBaja(estudiante);
+        if (!eliminado) {
+            throw new PersistenciaException(
+                    "El estudiante " + estudiante.getMatricula() + " no está inscrito en el curso");
+        }
+    }
+
+    /**
+     * Obtiene la lista de espera de un curso.
+     *
+     * @param claveCurso clave del curso
+     * @return lista doblemente enlazada circular con los estudiantes en espera
+     * @throws PersistenciaException si el curso no existe
+     */
+    public ListaDoblementeEnlazadaCircular<Estudiante> obtenerListaEspera(String claveCurso)
+            throws PersistenciaException {
+        return buscarCurso(claveCurso).getEspera();
+    }
+
+    /**
+     * Obtiene la lista de inscritos de un curso.
+     *
+     * @param claveCurso clave del curso
+     * @return lista enlazada simple con los estudiantes inscritos
+     * @throws PersistenciaException si el curso no existe
+     */
+    public ListaEnlazada<Estudiante> obtenerInscritos(String claveCurso)
+            throws PersistenciaException {
+        return buscarCurso(claveCurso).getInscritos();
+    }
+
+    /**
+     * Rota el rol (tutor/líder) al siguiente estudiante en el curso.
+     *
+     * @param claveCurso clave del curso
+     * @return estudiante que ahora tiene el rol activo
+     * @throws PersistenciaException si el curso no existe o no hay estudiantes con rol
+     */
+    public Estudiante rotarRol(String claveCurso) throws PersistenciaException {
+        Curso curso = buscarCurso(claveCurso);
+        if (curso.getRoles().empty()) {
+            throw new PersistenciaException("No hay estudiantes en la lista de roles del curso");
+        }
+        curso.rotarRol();
+        Estudiante conRol = curso.getEstudianteConRol();
+        if (conRol != null) {
+            conRol.setRol("LÍDER");
+        }
+        return conRol;
     }
 }

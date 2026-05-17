@@ -10,6 +10,7 @@ import Entidades.Estudiante;
 import Entidades.Inscripciones;
 import Entidades.SolicitudCalificacion;
 import Estructuras.ListaEnlazada;
+import ListasEnlazadas.ListaDoblementeEnlazadaCircular;
 import excepciones.PersistenciaException;
 
 /**
@@ -94,7 +95,7 @@ public class PersistenciaFachada implements IPersistenciaFachada{
 
         persistenciaInscripciones.darBaja(claveCurso, estudiante.getNombreCompleto());
     }
-
+    
     @Override
     public ListaEnlazada<Inscripciones> obtenerInscripciones() {
         return persistenciaInscripciones.obtenerTodas();
@@ -103,6 +104,21 @@ public class PersistenciaFachada implements IPersistenciaFachada{
     @Override
     public void agregarSolicitudCalificacion(SolicitudCalificacion solicitud) {
         persistenciaSolicitudes.agregarSolicitud(solicitud);
+    }
+    
+    @Override
+    public ListaEnlazada<Estudiante> obtenerInscritosDeCurso(String claveCurso) throws PersistenciaException {
+        return persistenciaCursos.obtenerInscritos(claveCurso);
+    }
+
+    @Override
+    public ListaDoblementeEnlazadaCircular<Estudiante> obtenerListaEsperaDeCurso(String claveCurso) throws PersistenciaException {
+        return persistenciaCursos.obtenerListaEspera(claveCurso);
+    }
+    
+    @Override
+    public Estudiante rotarRolCurso(String claveCurso) throws PersistenciaException {
+        return persistenciaCursos.rotarRol(claveCurso);
     }
 
     @Override
